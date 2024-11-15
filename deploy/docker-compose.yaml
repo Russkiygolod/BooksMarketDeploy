@@ -1,0 +1,72 @@
+version: "3"
+
+services:
+  database_redis:
+    image: redis
+    container_name: redis
+    networks: 
+      - book_m
+    healthcheck:
+        test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+
+  database_postgres:
+    image: postgres
+    container_name: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: BookMarket
+    networks: 
+      - book_m
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-U", "postgres"]
+      
+  create-table:
+    image: postgres
+    container_name: create-table
+    networks: 
+      - book_m
+    command: bash -c 'PGPASSWORD=postgres psql -U postgres --dbname BookMarket -p 5432 -h database_postgres -c "DROP TABLE IF EXISTS books, authors, authors_books; CREATE TABLE books (id SERIAL PRIMARY KEY, title VARCHAR NOT NULL, price INTEGER NOT NULL); CREATE TABLE authors ( id SERIAL PRIMARY KEY, name VARCHAR NOT NULL); CREATE TABLE authors_books ( books_id INTEGER REFERENCES books(id), authors_id INTEGER REFERENCES authors(id)); CREATE TABLE users ( id SERIAL PRIMARY KEY, email TEXT NOT NULL UNIQUE, password TEXT NOT NULL );"'
+    depends_on: 
+      database_postgres:
+        condition: service_healthy 
+
+ 
+  backend_book:
+    image: book:1
+    container_name: book
+    environment:
+      DB_NAME_P: BookMarket
+      DB_PASSWORD_P: postgres
+      DB_USER_P: postgres
+      HOST_P: postgres
+      HOST_R: redis
+    networks: 
+      - book_m
+    depends_on: 
+      database_redis:
+        condition: service_healthy
+      database_postgres:
+        condition: service_healthy  
+
+  backend_api_gw:
+    image: api-gw
+    environment:
+      HOST: book
+    networks: 
+      - book_m
+    ports:
+      - 80:80
+    depends_on: 
+      database_redis:
+        condition: service_healthy
+      database_postgres:
+        condition: service_started  
+volumes:
+  postgres:
+
+networks: 
+  book_m:
+    name: book_m 

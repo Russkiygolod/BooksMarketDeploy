@@ -1,0 +1,87 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+option go_package = "/Users/user/Documents/go Linux/module5/book-proto/go/api/books";
+package api.v1;
+
+service Books {
+  rpc GetBooks(GetBooksReq) returns (GetBooksResp);
+  rpc PostBooks(PostBooksReq) returns (PostBooksResp);
+  rpc PatchBooks(PatchBooksReq) returns (PatchBooksResp); 
+  rpc DelBooks(DelBooksReq) returns (DelBooksResp);
+  rpc PostRegistration (PostRegistrationReq) returns (PostRegistrationResp);
+  rpc PostLogin (PostLoginReq) returns (PostLoginResp);
+  rpc PostChekAuth (PostChekAuthReq) returns (PostChekAuthResp);
+}
+
+message GetBooksReq {
+ optional uint64 id = 1;
+ optional string tittle = 2;
+ optional uint64 authorID = 3;
+ optional string authorName = 4;
+}
+
+message GetBooksResp {
+  repeated Book books = 1;
+}
+
+message Book{
+  uint64 BookID = 1;
+  string BookTitle = 2;
+  uint64 Price = 3;
+  string AuthorName = 4;
+}
+
+message PostBooksReq {
+ optional uint64 id = 1;
+ optional string tittle = 2;
+ optional uint64 authorID = 3;
+ optional string authorName = 4;
+ uint64 Price = 5;
+}
+
+message PostBooksResp {}
+
+message PatchBooksReq {
+ optional uint64 id = 1;
+ optional string tittle = 2;
+ optional uint64 authorID = 3;
+ optional string authorName = 4;
+ optional string authorsOldName = 5; 
+ uint64 Price = 6;
+}
+
+message PatchBooksResp {
+ 
+}
+
+message DelBooksReq{
+  uint64 BookID = 1;
+}
+
+message DelBooksResp {}
+
+message PostRegistrationReq{
+  string email = 1;
+  string password = 2;
+}
+
+message PostRegistrationResp{}
+
+message PostLoginReq{
+  string email = 1;
+  string password = 2;
+}
+
+message PostLoginResp{
+  uint64 id = 1;
+    
+}
+
+message PostChekAuthReq{
+  string email = 1;
+}
+
+message PostChekAuthResp{
+ 
+}

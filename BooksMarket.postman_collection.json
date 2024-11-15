@@ -1,0 +1,159 @@
+{
+	"info": {
+		"_postman_id": "a1afe187-f8e1-4c99-9389-b46c2aa6fe0b",
+		"name": "BooksMarket",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "33694471"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"kerirr3@yandex.ru\",\n    \"password\": \"123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:80/register"
+			},
+			"response": []
+		},
+		{
+			"name": "login true",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"faster@yandex.ru\",\n    \"password\": \"1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost/login"
+			},
+			"response": []
+		},
+		{
+			"name": "login false email not found",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"faster@yandex.ru\",\n    \"password\": \"12345\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost/login"
+			},
+			"response": []
+		},
+		{
+			"name": "login false incorrect password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"kert@yandex.ru\",\n    \"password\": \"12367\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost/login"
+			},
+			"response": []
+		},
+		{
+			"name": "createBooks",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjc3NzU5OTEsInN1YiI6ImtlcnRpc0B5YW5kZXgucnUifQ.5X8f8qbJgfxjYXTlvRo9TETuFTybZRIRjXOQ409Hhiw"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"book_title\":\"\",\n  \"author_name\":\"\",\n  \"price\": 100\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost/books"
+			},
+			"response": []
+		},
+		{
+			"name": "readBooks",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg0ODgyMDcsInN1YiI6ImtlcnRpc2VAeWFuZGV4LnJ1In0.pzjkuVW9wssscggBcWhXh8XuEFBxgB_j_uSRFsOrQJY"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"book_id\":0,\n  \"book_title\":\"\",\n  \"author_id\":0,  \n  \"author_name\":\"Hemm\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:80/books"
+			},
+			"response": []
+		},
+		{
+			"name": "updateBooks",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": "http://localhost/books"
+			},
+			"response": []
+		},
+		{
+			"name": "deleteBooks",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost/books"
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
