@@ -19,7 +19,7 @@ The microservice acts as a gateway and receives commands from the client via the
 Also in the api-gw microservice, authorization by token is implemented.
 
     MicroserviceThe Book  
-Is a storage of data about books. It receives data from the api-gw service via the GRPS protocol and works directly with postgres and redis to perform CRUD operations on the bookstore.
+Is a storage of data about books. It receives data from the api-gw service via the gRPC protocol and works directly with postgres and redis to perform CRUD operations on the bookstore.
 The Dockerfile and description of how to create the image will also be inside the Book project
 
 The pens are attached in the file: BooksMarket.postman_collection, which can be exported to Postman.
